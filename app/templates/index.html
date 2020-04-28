@@ -1,0 +1,222 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Challenge52</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/css/bulma-carousel.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+  <body style="background: url('/static/app/bkgnd.jpg') no-repeat center fixed; background-size: cover;">
+  <style type="text/css">
+    video{
+      width: 83%;
+    }
+
+    .elem{
+      position: relative;
+      text-align: center;
+    }
+    
+    .overlay {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 9%;
+      height: 97%;
+      width: 83%;
+      opacity: 0.5;
+      transition: .1s ease;
+      background-color: #008CBA;
+    }
+    
+    .desc {
+      color: white;
+      font-size: 20px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+  </style>
+
+  
+  <section class="section" style="padding-top: 1%">
+    <div class="container">
+      <div align="center">
+        <h1 class="title" style="color: white;">
+          Challenge52
+        </h1>
+        <p class="subtitle" style="color: white;">
+          Explore new Challenges!
+        </p>
+      </div>
+
+
+      <div id="uploaded">
+        <div style="padding-top: 2%; display: flex;">
+          <h1 class="subtitle" style="color: white; display: inline-block;" >My Videos</h1>
+          <form  style="color: white; display: inline-block; margin-left: auto" id="vidupload" enctype="multipart/form-data" method="POST" action=""  v-on:submit.prevent="uploadVideo">
+            {% csrf_token %}
+            <input placeholder="Title for your file" type="text" name="title" id="title">
+            <input type="file" name="file" id="file">
+            <input type="submit" value="Upload"/>
+          </form>
+        </div>
+
+        <div id="pc-copy" class="carousel" style="display: none">
+          <profile-video v-for="video in videos" :video="video"/>
+        </div>
+        <div id="profile-carousel" class="carousel" ></div>
+      </div>
+
+      <script src="{% static 'app/js/upload.js' %}"></script>
+
+      <h1 class="subtitle" style="padding-top: 2%; color: white">Featured Videos</h1>
+      <div id="carousel-demo" class="carousel">
+        <div class="item-1 elem" align="center">
+          <video loop preload="metadata" poster="{% static 'app/thumbnail.jpg' %}">
+            <source src="{% static 'app/mov_bbb.mp4' %}" type="video/mp4">
+          </video>
+        </div>
+        <div class="item-2 elem" align="center">
+          <!-- <div class="overlay"><p class="desc">hi</div> -->
+          <video loop preload="metadata" poster="{% static 'app/thumbnail.jpg' %}">
+            <source src="{% static 'app/mov_bbb.mp4' %}" type="video/mp4">
+          </video>
+        </div>
+        <div class="item-3 elem" align="center">
+          <video loop preload="metadata" poster="{% static 'app/thumbnail.jpg' %}">
+            <source src="{% static 'app/mov_bbb.mp4' %}" type="video/mp4">
+          </video>
+        </div>
+        <div class="item-4 elem" align="center">
+          <video loop preload="metadata" poster="{% static 'app/thumbnail.jpg' %}">
+            <source src="{% static 'app/mov_bbb.mp4' %}" type="video/mp4">
+          </video>
+        </div>
+        <div class="item-5 elem" align="center">
+          <video loop preload="metadata" poster="{% static 'app/thumbnail.jpg' %}">
+            <source src="{% static 'app/mov_bbb.mp4' %}" type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <!-- <div id="carousel-demo" class="carousel" style="padding-top: 5%">
+        <div class="item-1 elem" align="center">
+          <video loop preload="metadata" poster="{% static 'app/thumbnail.jpg' %}">
+            <source src="{% static 'app/mov_bbb.mp4' %}" type="video/mp4">
+          </video>
+        </div>
+        <div class="item-2 elem" align="center">
+          <video loop preload="metadata" poster="{% static 'app/thumbnail.jpg' %}">
+            <source src="{% static 'app/mov_bbb.mp4' %}" type="video/mp4">
+          </video>
+        </div>
+        <div class="item-3 elem" align="center">
+          <video loop preload="metadata" poster="{% static 'app/thumbnail.jpg' %}">
+            <source src="{% static 'app/mov_bbb.mp4' %}" type="video/mp4">
+          </video>
+        </div>
+        <div class="item-4 elem" align="center">
+          <video loop preload="metadata" poster="{% static 'app/thumbnail.jpg' %}">
+            <source src="{% static 'app/mov_bbb.mp4' %}" type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <div id="carousel-demo" class="carousel" style="padding-top: 5%">
+        <div class="item-1 elem" align="center">
+          <video loop preload="metadata" poster="{% static 'app/thumbnail.jpg' %}">
+            <source src="{% static 'app/mov_bbb.mp4' %}" type="video/mp4">
+          </video>
+        </div>
+        <div class="item-2 elem" align="center">
+          <video loop preload="metadata" poster="{% static 'app/thumbnail.jpg' %}">
+            <source src="{% static 'app/mov_bbb.mp4' %}" type="video/mp4">
+          </video>
+        </div>
+        <div class="item-3 elem" align="center">
+          <video loop preload="metadata" poster="{% static 'app/thumbnail.jpg' %}">
+            <source src="{% static 'app/mov_bbb.mp4' %}" type="video/mp4">
+          </video>
+        </div>
+        <div class="item-4 elem" align="center">
+          <video loop preload="metadata" poster="{% static 'app/thumbnail.jpg' %}">
+            <source src="{% static 'app/mov_bbb.mp4' %}" type="video/mp4">
+          </video>
+        </div>
+      </div>
+         -->
+    <script src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/js/bulma-carousel.min.js"></script>
+    <script>
+    bulmaCarousel.attach('#carousel-demo', {
+      slidesToScroll: 1,
+      slidesToShow: 3,
+      infinite: true,
+      pagination: false
+    });
+
+
+    // var figure = $(".video").hover( hoverVideo, hideVideo );
+
+    // function hoverVideo(e) {  
+    //     $('video', this).animate({width: "110%", height: "110%"}, 'fast');
+    //     $('video', this).get(0).load();
+    //     $('video', this).get(0).play(); 
+    // }
+
+    // function hideVideo(e) {
+    //     $('video', this).animate({width: "83%", height: "83%"}, 'fast');
+    //     $('video', this).get(0).pause(); 
+    // }
+
+    function video_conf(){
+      $( "video" ).unbind();
+      $( ".overlay" ).unbind();
+
+      $( "video" ).hover(
+        function() {
+          $(this).animate({width: "110%", height: "110%"}, 'fast');
+        }, function() {
+          $(this).animate({width: "83%", height: "83%"}, 'fast');
+          $(this).trigger("pause"); 
+        }
+      );
+
+      $( "video" ).click(function(){
+        $(this).trigger("play")
+      });
+
+      $( ".overlay" ).hover(
+        function() {
+          $(this).animate({width: "110%", height: "110%"}, 'fast');
+        }, function() {
+          $(this).animate({width: "83%", height: "83%"}, 'fast');
+        }
+      );
+
+      $( ".overlay" ).click(function(){
+        $(this).next().trigger("play");
+        $(this).hide();
+      });
+    }
+    
+    video_conf()
+    
+    </script>
+
+    </div>
+  </section>
+  </body>
+</html>
+
+
